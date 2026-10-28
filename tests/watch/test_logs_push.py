@@ -10,7 +10,7 @@ def test_log_roundtrip_and_multiline():
     logger.info("hola", "api")
     logger.error("falló", "boom\nlinea 2", "api")
     logger.success("ok")
-    entries = parse_entries(log_file_path().read_text().splitlines())
+    entries = parse_entries(log_file_path().read_text(encoding="utf-8").splitlines())
     assert [(e.level, e.project) for e in entries] == [("INFO", "api"), ("ERROR", "api"), ("SUCCESS", None)]
     assert entries[1].message.startswith("falló - boom")
 
