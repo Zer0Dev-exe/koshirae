@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="1200" height="320" role="img" aria-labelledby="t d">
+  <title id="t">Koshirae</title>
+  <desc id="d">Koshirae: repos, MongoDB y procesos desde una sola CLI + TUI</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B0F17"/>
+      <stop offset="1" stop-color="#1A2233"/>
+    </linearGradient>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#F97316"/>
+      <stop offset="1" stop-color="#A855F7"/>
+    </linearGradient>
+    <linearGradient id="blade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#A855F7" stop-opacity="0"/>
+      <stop offset="0.55" stop-color="#E5E7EB" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#F97316"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="320" fill="url(#bg)"/>
+
+  <!-- trama de líneas finas, como el temple (hamon) -->
+  <g stroke="#E5E7EB" stroke-opacity="0.04" stroke-width="1">
+    <path d="M0 40H1200M0 80H1200M0 120H1200M0 160H1200M0 200H1200M0 240H1200M0 280H1200"/>
+  </g>
+
+  <!-- hoja de katana que termina en kissaki (punta) -->
+  <g>
+    <path d="M60 188 L900 168 L1010 160 L1130 150 L1010 178 L900 192 L60 200 Z" fill="url(#blade)" opacity="0.95"/>
+    <path d="M60 193 L900 180 L1010 169 L1130 150" fill="none" stroke="#0B0F17" stroke-opacity="0.55" stroke-width="1.5"/>
+    <!-- yokote: la línea que separa la punta -->
+    <path d="M1010 160 L1010 178" stroke="#0B0F17" stroke-opacity="0.7" stroke-width="2"/>
+  </g>
+
+  <!-- tsuba -->
+  <circle cx="66" cy="194" r="20" fill="#111827" stroke="url(#brand)" stroke-width="3"/>
+  <circle cx="66" cy="194" r="5" fill="#F97316"/>
+
+  <!-- título -->
+  <text x="60" y="140" font-family="'JetBrains Mono','Fira Code','DejaVu Sans Mono',Consolas,monospace"
+        font-size="96" font-weight="800" letter-spacing="10" fill="url(#brand)">KOSHIRAE</text>
+  <text x="64" y="258" font-family="'JetBrains Mono','Fira Code','DejaVu Sans Mono',Consolas,monospace"
+        font-size="22" fill="#E5E7EB" fill-opacity="0.85">repos · mongodb · pm2  —  una sola CLI + TUI</text>
+</svg>
