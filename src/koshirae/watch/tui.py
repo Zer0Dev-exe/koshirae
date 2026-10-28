@@ -141,8 +141,7 @@ class WatchApp(App[None]):
         try:
             watcher.process_project(r.project)
         finally:
-            r.phase = "idle"
-        self._inspect(r)
+            self._inspect(r)  # deja la fase en idle solo cuando el estado ya está refrescado
 
     @work(thread=True, exclusive=True, group="refresh")
     def action_refresh(self) -> None:
