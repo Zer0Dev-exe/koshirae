@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import time
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from threading import RLock
 
 from rich.text import Text
 from textual import work
@@ -30,6 +31,7 @@ class Row:
     dirty: bool = False
     error: str | None = None
     checked_at: float | None = None
+    lock: RLock = field(default_factory=RLock, repr=False, compare=False)  # serializa inspección y actualización
 
 
 def ago(ts: float | None) -> str:
@@ -107,7 +109,10 @@ class WatchApp(App[None]):
         self._render_rows()
 
     def _render_rows(self) -> None:
-        table = self.query_one(DataTable)
+        tables = self.query(DataTable)
+        if not tables:  # el timer puede dispararse antes de que la pantalla esté montada (o ya desmontada)
+            return
+        table = tables.first()
         selected = table.cursor_row
         table.clear()
         for r in self.rows:
@@ -122,6 +127,10 @@ class WatchApp(App[None]):
 
     # --- trabajo en hilos -----------------------------------------------------------------------------------
     def _inspect(self, r: Row) -> None:
+        with r.lock:
+            self._inspect_locked(r)
+
+    def _inspect_locked(self, r: Row) -> None:
         r.phase = "checking"
         try:
             ok, reason = gitops.validate_repository(r.project)
@@ -137,11 +146,12 @@ class WatchApp(App[None]):
             r.phase, r.checked_at = "idle", time.time()
 
     def _update(self, r: Row) -> None:
-        r.phase = "updating"
-        try:
-            watcher.process_project(r.project)
-        finally:
-            self._inspect(r)  # deja la fase en idle solo cuando el estado ya está refrescado
+        with r.lock:
+            r.phase = "updating"
+            try:
+                watcher.process_project(r.project)
+            finally:
+                self._inspect(r)  # deja la fase en idle solo cuando el estado ya está refrescado
 
     @work(thread=True, exclusive=True, group="refresh")
     def action_refresh(self) -> None:
