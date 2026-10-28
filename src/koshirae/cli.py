@@ -11,6 +11,7 @@ from koshirae import __version__
 from koshirae.mongo.cli import app as mongo_app
 from koshirae.mongo.cli import _hoist_global_flags
 from koshirae.repo.cli import app as repo_app
+from koshirae.watch.cli import app as watch_app
 
 err_console = Console(stderr=True)
 
@@ -25,6 +26,7 @@ app = typer.Typer(
 )
 app.add_typer(repo_app, name="repo", help="Repositorios de GitHub, GitLab y Bitbucket (GitKeeper).")
 app.add_typer(mongo_app, name="mongo", help="MongoDB self-hosted y Atlas (Mangosta).")
+app.add_typer(watch_app, name="watch", help="Vigila repos locales: pull, build y PM2 (GitMaster).")
 
 
 def _version(value: bool) -> None:
