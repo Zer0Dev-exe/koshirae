@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/banner.svg" alt="Koshirae" width="100%">
+</p>
+
 # Koshirae
 
 [![CI](https://github.com/Zer0Dev-exe/koshirae/actions/workflows/ci.yml/badge.svg)](https://github.com/Zer0Dev-exe/koshirae/actions/workflows/ci.yml)
